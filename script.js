@@ -1,13 +1,19 @@
-// Sélectionner les éléments nécessaires
 const textToAdd = document.querySelector(".addText");
 const buttonAdd = document.querySelector(".add");
 const newDiv = document.querySelector(".container");
 
-// Vérifier si les éléments existent avant d'ajouter des écouteurs d'événements
 if (textToAdd && buttonAdd && newDiv) {
 
-    // Fonction pour créer et ajouter un nouvel élément todo
-    function createTodo(text) {
+    function saveTodos(todos) {
+        localStorage.setItem('todos', JSON.stringify(todos));
+    }
+
+    function loadTodos() {
+        const savedTodos = localStorage.getItem('todos');
+        return savedTodos ? JSON.parse(savedTodos) : [];
+    }
+
+    function createTodoElement(text) {
         const newTodo = document.createElement("div");
         newTodo.classList.add("each-todo");
 
@@ -17,32 +23,44 @@ if (textToAdd && buttonAdd && newDiv) {
         const deleteButton = document.createElement("button");
         deleteButton.textContent = "Supprimer";
 
-        const editButton = document.createElement("button");
-        deleteButton.textContent = "Supprimer";
-
-        // Attacher un écouteur d'événement pour le bouton de suppression
         deleteButton.addEventListener("click", () => {
             newTodo.remove();
+            removeTodoFromStorage(text);
         });
 
         newTodo.appendChild(newElement);
         newTodo.appendChild(deleteButton);
         newDiv.appendChild(newTodo);
-    };
+    }
 
-    // Ajouter un écouteur d'événements pour le bouton "Ajouter"
+    function createTodo(text) {
+        createTodoElement(text);
+        const todos = loadTodos();
+        todos.push(text);
+        saveTodos(todos);
+    }
+
+    function removeTodoFromStorage(text) {
+        let todos = loadTodos();
+        todos = todos.filter(todo => todo !== text);
+        saveTodos(todos);
+    }
+
     buttonAdd.addEventListener("click", () => {
         const text = textToAdd.value.trim();
 
-        // Vérifier si le texte n'est pas vide
         if (text.length < 1) {
-            console.log("AJOUTE");
-            alert("Veuillez entrer un texte.");
+            alert("Faut écrire sinon ça marche pas");
         } else {
             createTodo(text);
-            textToAdd.value = ""; // Réinitialiser le champ de saisie
+            textToAdd.value = "";
         }
     });
+
+    // Charger les tâches depuis le localStorage au chargement de la page
+    const todos = loadTodos();
+    todos.forEach(todo => createTodoElement(todo));
+
 } else {
     console.error("Les éléments nécessaires ne sont pas disponibles dans le DOM.");
 }
