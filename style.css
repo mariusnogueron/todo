@@ -1,0 +1,67 @@
+@font-face {
+    font-family: TerminalGrotesque;
+    src: url(/font/terminal-grotesque.ttf);
+}
+
+* {
+    font-family: TerminalGrotesque;
+}
+
+button {
+    font-size: 2rem;
+    color: #FCF4F4;
+    background-color: #880909;
+    border: 2px solid black;
+    border-radius: .5rem;
+    padding: .2rem .5rem;
+}
+
+input {
+    background-color: #FCF4F4;
+    border: 1px solid #E05C5C;
+}
+
+h1 {
+    font-size: 5rem;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 2rem;
+}
+
+label {
+    font-size: 2rem;
+}
+
+input:focus {
+    outline: 1px solid #E05C5C;
+}
+
+input {
+    font-size: 2rem;
+}
+
+.container {
+    background-color: #FCF4F4;
+    border-radius: 2rem
+}
+
+.each-todo {
+    display: flex;
+    justify-content: space-around;
+    padding: .5rem 0;
+    align-items: center;
+
+}
+
+p {
+    font-size: 2rem;
+    margin: 0;
+}
+
+.search {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 2%;
+    margin-bottom: 5rem;
+}
